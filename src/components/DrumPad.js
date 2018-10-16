@@ -9,6 +9,11 @@ export class DrumPad extends Component {
     document.addEventListener("keyup", this.handleKeyUp);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+    document.removeEventListener("keyup", this.handleKeyUp);
+  }
+
   handleKeyDown = e => {
     var key = e.key.toUpperCase();
     if (this.props.power === "on" && this.props.id === key) {
