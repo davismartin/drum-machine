@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 export class DrumPad extends Component {
-  component = React.createRef();
+  audio = React.createRef();
   button = React.createRef();
 
   componentDidMount() {
@@ -16,18 +16,15 @@ export class DrumPad extends Component {
 
   handleKeyDown = e => {
     var key = e.key.toUpperCase();
-    if (this.props.power === "on" && this.props.id === key) {
-      this.shouldPlay();
-      this.props.onClick(this.props.name);
-      if (this.button.current) {
-        this.button.current.style.backgroundColor = "#d9d9d9";
-      }
+    if (this.props.id === key) {
+      this.button.current.click();
+      this.button.current.style.backgroundColor = "#d9d9d9";
     }
   };
 
   handleKeyUp = e => {
     if (this.button.current) {
-      this.button.current.style.backgroundColor = "#eac67a";
+      this.button.current.style.backgroundColor = "";
     }
   };
 
@@ -39,11 +36,11 @@ export class DrumPad extends Component {
   };
 
   shouldPlay = () => {
-    if (this.component.current) {
-      if (this.component.current.paused) {
-        this.component.current.play();
+    if (this.audio.current) {
+      if (this.audio.current.paused) {
+        this.audio.current.play();
       } else {
-        this.component.current.currentTime = 0;
+        this.audio.current.currentTime = 0;
       }
     }
   };
@@ -60,7 +57,7 @@ export class DrumPad extends Component {
         ref={this.button}
       >
         {id}
-        <audio className="clip" id={id} src={sound} ref={this.component} />
+        <audio className="clip" id={id} src={sound} ref={this.audio} />
       </button>
     );
   }
